@@ -1,0 +1,109 @@
+{
+  "position": "top",
+  "margin-top": 2,
+  "margin-left": 15,
+  "margin-right": 15,
+  "margin-bottom": 0,
+  "modules-left": [
+    "wlr/taskbar"
+  ],
+  "modules-center": [
+    "custom/spotify",
+    "clock"
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "backlight",
+    "custom/kbd_backlight",
+    "battery"
+  ],
+  // Modules configuration
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 14,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close"
+  },
+  "custom/spotify": {
+    "format": "<span foreground='#b4befe'>  </span>{}",
+    "interval": 1,
+    "exec-if": "pgrep spotify",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl -p spotify previous",
+    "on-scroll-down": "playerctl -p spotify next",
+    "escape": true,
+    "max-length": 60,
+    "exec": "$HOME/.config/waybar/scripts/spotify.sh",
+    "tooltip": true
+  },
+  "clock": {
+    "format": "<span foreground='#b4befe'> </span>{:%I:%M %p}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "on-click": "gnome-calendar",
+    "interval": 60
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span size='13000' foreground='#a6e3a1'>{icon}</span> {capacity}%",
+    "format-warning": "<span size='13000' foreground='#a6e3a1'>{icon}</span> {capacity}%",
+    "format-critical": "<span size='13000' foreground='#f38ba8'>{icon}</span> {capacity}%",
+    "format-charging": "<span size='13000' foreground='#a6e3a1'> </span>{capacity}%",
+    "format-plugged": "<span size='13000' foreground='#a6e3a1'> </span>{capacity}%",
+    "format-alt": "<span size='13000' foreground='#a6e3a1'>{icon}</span> {time}",
+    "format-full": "<span size='13000' foreground='#a6e3a1'> </span>{capacity}%",
+    "format-icons": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "tooltip-format": "{time}"
+  },
+  "network": {
+    "format-wifi": "<span size='13000' foreground='#f5e0dc'>  </span>{essid}",
+    "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭</span> Disconnected",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "<span size='13000' foreground='#f5e0dc'> </span>Disconnected",
+    "tooltip-format-wifi": "Signal Strength: {signalStrength}%",
+    "tooltip-format-ethernet": "{ifname}: {ipAddress}",
+    "on-click": "nm-connection-editor"
+  },
+  "pulseaudio": {
+    "on-click": "pavucontrol",
+    "format": "<span size='13000' foreground='#f9e2af'>{icon}</span> {volume}%",
+    "format-muted": "<span size='14000' foreground='#f9e2af'></span> Muted",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        ""
+      ]
+    },
+    "interval": 1
+  },
+  "backlight": {
+    "format": "<span foreground='#f9e2af'> </span>{percent}%",
+    "interval": 1,
+    "tooltip-format": "Brightness: {percent}%"
+  },
+  "custom/kbd_backlight": {
+    "format": "<span foreground='#f9e2af'> </span>{percent}%",
+    "exec": "brightnessctl -d smc::kbd_backlight get",
+    "interval": 10,
+    "on-click": "brightnessctl -d smc::kbd_backlight set +10%",
+    "on-click-right": "brightnessctl -d smc::kbd_backlight set 10%-",
+    "tooltip": false,
+    "tooltip-format": "Keyboard Backlight: {percent}%"
+  }
+}

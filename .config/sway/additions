@@ -1,0 +1,59 @@
+exec --no-startup-id /usr/lib/xdg-desktop-portal -r
+# swaybg_command -
+
+bindsym $mod+b exec firefox
+bindsym $mod+Shift+s exec grimshot copy area
+bindsym $mod+Shift+f floating toggle
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86MonBrightnessUp exec echo "+acpi_video0" | bash ~/.config/sway/brightness.sh
+bindsym XF86MonBrightnessDown exec echo "-acpi_video0" | bash ~/.config/sway/brightness.sh
+bindsym XF86KbdBrightnessUp exec echo "+smc::kbd_backlight" | bash ~/.config/sway/brightness.sh
+bindsym XF86KbdBrightnessDown exec echo "-smc::kbd_backlight" | bash ~/.config/sway/brightness.sh
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86PowerOff exec wlogout -p layer-shell
+bindsym XF86LaunchA exec killall -SIGUSR1 waybar
+bindsym XF86LaunchB exec bash ~/.config/sway/window.sh
+
+input type:touchpad {
+    dwt disabled
+}
+
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
+
+font pango:SourceCodePro Regular 12
+
+bar {
+  swaybar_command waybar
+}
+
+exec mako --config ~/.config/mako/config
+output * bg ~/.config/sway/background.png fill
+
+default_border pixel 2
+# default_border none
+# for_window [class=".*"] border pixel 2
+default_floating_border none 
+# smart_gaps on
+# hide_edge_borders smart
+gaps inner 15
+gaps outer 0
+gaps bottom 1
+gaps top 1
+
+# SwayFx options
+corner_radius 12
+smart_corner_radius on
+shadows on
+shadow_blur_radius 12
+shadow_color #303446
+
+exec notify-send -t 5000 "System" "Welcome"
+
+xwayland enable
+for_window [shell="xwayland"] title_format "[XWayland] %title"
+# Allow dragging windows around with mod+left click
